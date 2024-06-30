@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:taskit/components/custom_text.dart';
-import 'package:taskit/components/tab_bar_page.dart';
-import '../components/dateview.dart';
+import 'package:taskit/components/text_view.dart';
+import 'package:taskit/components/tab_bar_first.dart';
+import '../components/date_text.dart';
 import '../constants/appconstants.dart';
 
 class EventDetail extends StatelessWidget {
@@ -36,6 +36,7 @@ class EventDetail extends StatelessWidget {
                     fontSize: 28,
                     color: AppThemeColors.primaryColor,
                     title: "Event: UI Redesign",
+                    fontWeight: FontWeight.w600,
                   )),
               const TodayDate(),
             ]),
@@ -60,16 +61,19 @@ class EventDetail extends StatelessWidget {
                       icon: TextView(
                     fontSize: 13,
                     title: "Details",
+                    fontWeight: FontWeight.w600,
                   )),
                   Tab(
                       icon: TextView(
                     fontSize: 13,
                     title: "Files",
+                    fontWeight: FontWeight.w600,
                   )),
                   Tab(
                       icon: TextView(
                     fontSize: 13,
                     title: "Notes",
+                    fontWeight: FontWeight.w600,
                   )),
                 ],
               ),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_week_view/flutter_week_view.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:taskit/components/dateview.dart';
 import 'package:taskit/pages/event_detail.dart';
 import '../constants/appconstants.dart';
 
