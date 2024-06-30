@@ -1,9 +1,11 @@
-import 'package:date_picker_timeline/extra/color.dart';
 import 'package:flutter/material.dart';
 import 'package:calendar_view/calendar_view.dart';
-import 'package:taskit/components/timeline.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:taskit/components/dayview.dart';
+import 'package:taskit/components/date_timeline.dart';
 import 'package:taskit/constants/appconstants.dart';
+
+import '../components/text_view.dart';
+import '../components/date_text.dart';
 
 class TaskCalendar extends StatelessWidget {
   const TaskCalendar({super.key});
@@ -33,7 +35,8 @@ class TaskCalendar extends StatelessWidget {
                       ],
                     ),
                     child: Container(
-                      padding: const EdgeInsets.only(left: 20, right: 20, top: 80),
+                      padding:
+                          const EdgeInsets.only(left: 20, right: 20, top: 80),
                       decoration: BoxDecoration(
                         color: AppThemeColors.background,
                         borderRadius: BorderRadius.circular(30),
@@ -57,21 +60,17 @@ class TaskCalendar extends StatelessWidget {
                           const SizedBox(
                             height: 25,
                           ),
-                          Text(
-                            "Hello John,",
-                            style: GoogleFonts.poppins(
-                                textStyle: const TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold)),
+                          TextView(
+                            title: "Hello John,",
+                            fontSize: 14,
+                            color: AppThemeColors.shadow,
+                            fontWeight: FontWeight.bold,
                           ),
-                          Text(
-                            "Today",
-                            style: GoogleFonts.poppins(
-                                textStyle: TextStyle(
-                                    color: AppThemeColors.primaryColor,
-                                    fontSize: 36,
-                                    fontWeight: FontWeight.w600)),
+                          TextView(
+                            title: "Today",
+                            fontSize: 36,
+                            color: AppThemeColors.primaryColor,
+                            fontWeight: FontWeight.w600,
                           ),
                           const SizedBox(
                             height: 20,
@@ -81,31 +80,31 @@ class TaskCalendar extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 30,),
-                  Container(
-                    padding: const EdgeInsets.only(left: 20,right: 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Daily Tasks",
-                          style: GoogleFonts.poppins(
-                              textStyle: const TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: 28,
-                                  fontWeight: FontWeight.w600)),
-                        ),
-                       const SizedBox(
-                         height: 400,
-                         child:  WeekView(showWeekends: false,showVerticalLines: false,headerStyle: HeaderStyle(),),
-                       )
-                      ],
-                    )
+                  const SizedBox(
+                    height: 30,
                   ),
+                  Container(
+                      padding: const EdgeInsets.only(left: 20, right: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              TextView(
+                                title: "Daily Tasks",
+                                fontSize: 28,
+                                color: AppThemeColors.shadow,
+                                fontWeight: FontWeight.w600,
+                              ),
+                              const TodayDate(),
+                            ],
+                          ),
+                          const SizedBox(height: 400, child: EventDayView())
+                        ],
+                      )),
                 ],
-              )
-
-          ),
+              )),
         ));
   }
 }
