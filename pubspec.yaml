@@ -38,7 +38,8 @@ dependencies:
   kalender: ^0.4.1
   calendar_view:
   date_picker_timeline:
-
+  flutter_week_view:
+  intl:
 
 dev_dependencies:
   flutter_test:

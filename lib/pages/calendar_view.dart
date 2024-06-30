@@ -1,9 +1,12 @@
 import 'package:date_picker_timeline/extra/color.dart';
 import 'package:flutter/material.dart';
 import 'package:calendar_view/calendar_view.dart';
+import 'package:taskit/components/dayview.dart';
 import 'package:taskit/components/timeline.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:taskit/constants/appconstants.dart';
+
+import '../components/dateview.dart';
 
 class TaskCalendar extends StatelessWidget {
   const TaskCalendar({super.key});
@@ -33,7 +36,8 @@ class TaskCalendar extends StatelessWidget {
                       ],
                     ),
                     child: Container(
-                      padding: const EdgeInsets.only(left: 20, right: 20, top: 80),
+                      padding:
+                          const EdgeInsets.only(left: 20, right: 20, top: 80),
                       decoration: BoxDecoration(
                         color: AppThemeColors.background,
                         borderRadius: BorderRadius.circular(30),
@@ -81,31 +85,35 @@ class TaskCalendar extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 30,),
-                  Container(
-                    padding: const EdgeInsets.only(left: 20,right: 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Daily Tasks",
-                          style: GoogleFonts.poppins(
-                              textStyle: const TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: 28,
-                                  fontWeight: FontWeight.w600)),
-                        ),
-                       const SizedBox(
-                         height: 400,
-                         child:  WeekView(showWeekends: false,showVerticalLines: false,headerStyle: HeaderStyle(),),
-                       )
-                      ],
-                    )
+                  const SizedBox(
+                    height: 30,
                   ),
+                  Container(
+                      padding: const EdgeInsets.only(left: 20, right: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Daily Tasks",
+                                style: GoogleFonts.poppins(
+                                    textStyle: const TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 28,
+                                        fontWeight: FontWeight.w600)),
+                              ),
+                              const TodayDate(),
+                            ],
+                          ),
+                          const SizedBox(
+                              height: 400,
+                              child: EventDayView())
+                        ],
+                      )),
                 ],
-              )
-
-          ),
+              )),
         ));
   }
 }
