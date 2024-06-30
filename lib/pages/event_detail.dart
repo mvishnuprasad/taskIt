@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:taskit/components/custom_text.dart';
+import 'package:taskit/components/tab_bar_page.dart';
 import '../components/dateview.dart';
 import '../constants/appconstants.dart';
 
@@ -19,9 +20,12 @@ class EventDetail extends StatelessWidget {
                 topRight: Radius.circular(30), topLeft: Radius.circular(30))),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-
           children: [
-             Icon( Icons.keyboard_arrow_down,color: AppThemeColors.primaryColor,size: 32,),
+            Icon(
+              Icons.keyboard_arrow_down,
+              color: AppThemeColors.primaryColor,
+              size: 32,
+            ),
             const SizedBox(
               height: 40,
             ),
@@ -39,7 +43,7 @@ class EventDetail extends StatelessWidget {
               height: 40,
             ),
             Container(
-              width: (width - 40) ,
+              width: (width - 40),
               decoration: BoxDecoration(
                   color: AppThemeColors.highLight.withOpacity(0.4),
                   borderRadius: const BorderRadius.all(Radius.circular(30))),
@@ -69,7 +73,16 @@ class EventDetail extends StatelessWidget {
                   )),
                 ],
               ),
-            )
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            Container(
+                height: height * 0.5,
+                padding: const EdgeInsets.only(top: 30, left: 30, right: 30),
+                child: const TabBarView(
+                  children: [DetailsTabBar(), Text("print('');"), Text("sss")],
+                ))
           ],
         ),
       ),

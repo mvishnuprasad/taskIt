@@ -27,8 +27,9 @@ class IconsDecorated extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration:
-      BoxDecoration(shape: BoxShape.circle, color: AppThemeColors.highLight.withOpacity(0.5)),
+      decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: AppThemeColors.highLight.withOpacity(0.5)),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Icon(
