@@ -6,4 +6,5 @@ class AppThemeColors {
   static Color background = const Color(0xfffffaf2);
   static Color shadow = const Color(0xffbdc0b7);
   static Color highLight = const Color(0xfff38154);
+
 }

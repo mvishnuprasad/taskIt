@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_week_view/flutter_week_view.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:taskit/components/dateview.dart';
+import 'package:taskit/pages/event_detail.dart';
 import '../constants/appconstants.dart';
 
 class EventDayView extends StatelessWidget {
@@ -35,6 +36,7 @@ class EventDayView extends StatelessWidget {
           hourRowHeight: 60,
           headerSize:20,
           currentTimeCircleRadius: 10,
+
           currentTimeCircleColor: AppThemeColors.highLight,
           currentTimeRuleHeight: 2,
           currentTimeRuleColor: AppThemeColors.primaryColor,
@@ -55,6 +57,13 @@ class EventDayView extends StatelessWidget {
             description: 'Even details are here',
             start: date.subtract(const Duration(hours: 1)),
             end: date.add(const Duration(hours: 2, minutes: 10)),
+            onTap:   (){
+              showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  builder: (context) => EventDetail()// The page to display as a bottom sheet
+              );
+            }
           ),
         ],
       ),
