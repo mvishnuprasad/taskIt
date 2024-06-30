@@ -4,29 +4,34 @@ import 'package:taskit/constants/appconstants.dart';
 import 'text_view.dart';
 
 class DetailsTabBar extends StatelessWidget {
-  const DetailsTabBar({super.key});
+  final double width;
+  const DetailsTabBar({super.key, required this.width});
 
   @override
   Widget build(BuildContext context) {
     return ListView(
       shrinkWrap: true,
-      children: const [
+      children:  [
         TabBarItem(
           icon: Icons.calendar_month,
           text: '10:30 - 11:30',
+          width: width,
         ),
         TabBarItem(
           icon: Icons.my_location_outlined,
           text: 'zoom.org/xar-eee-ee',
+          width: width,
         ),
         TabBarItem(
           icon: Icons.message,
           text:
               'Prepare the notes in PDF, ReFactor Figma constants, Cancel Launch page animation',
+          width: width,
         ),
         TabBarItem(
           icon: Icons.person_rounded,
           text: 'Joseph , Peter , Rebecca',
+          width: width,
         ),
       ],
     );
@@ -36,10 +41,12 @@ class DetailsTabBar extends StatelessWidget {
 class TabBarItem extends StatelessWidget {
   final IconData icon;
   final String text;
-  const TabBarItem({super.key, required this.icon, required this.text});
+  final double width;
+  const TabBarItem({super.key, required this.icon, required this.text, required this.width});
 
   @override
   Widget build(BuildContext context) {
+    final boxWidth = (width - 40) * 0.7;
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 10.0),
       child: Row(
@@ -54,7 +61,7 @@ class TabBarItem extends StatelessWidget {
             width: 20,
           ),
           ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 200),
+              constraints:  BoxConstraints(maxWidth: boxWidth *0.8),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -69,6 +76,7 @@ class TabBarItem extends StatelessWidget {
                   ),
                   Divider(
                     height: 2,
+
                     color: AppThemeColors.primaryColor.withOpacity(0.2),
                   )
                 ],

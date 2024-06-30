@@ -43,39 +43,42 @@ class EventDetail extends StatelessWidget {
             const SizedBox(
               height: 40,
             ),
-            Container(
-              width: (width - 40),
-              decoration: BoxDecoration(
-                  color: AppThemeColors.highLight.withOpacity(0.4),
-                  borderRadius: const BorderRadius.all(Radius.circular(30))),
-              child: TabBar(
-                dividerHeight: 0,
-                indicatorSize: TabBarIndicatorSize.tab,
-                labelColor: AppThemeColors.background,
-                unselectedLabelColor: AppThemeColors.primaryColor,
-                indicator: BoxDecoration(
-                    color: AppThemeColors.highLight,
+            Center(
+              child: Container(
+                width: (width - 40) * 0.9,
+                decoration: BoxDecoration(
+                    color: AppThemeColors.highLight.withOpacity(0.4),
                     borderRadius: const BorderRadius.all(Radius.circular(30))),
-                tabs: const [
-                  Tab(
-                      icon: TextView(
-                    fontSize: 13,
-                    title: "Details",
-                    fontWeight: FontWeight.w600,
-                  )),
-                  Tab(
-                      icon: TextView(
-                    fontSize: 13,
-                    title: "Files",
-                    fontWeight: FontWeight.w600,
-                  )),
-                  Tab(
-                      icon: TextView(
-                    fontSize: 13,
-                    title: "Notes",
-                    fontWeight: FontWeight.w600,
-                  )),
-                ],
+                child: TabBar(
+                  dividerHeight: 0,
+                  indicatorSize: TabBarIndicatorSize.tab,
+                  labelColor: AppThemeColors.background,
+                  unselectedLabelColor: AppThemeColors.primaryColor,
+                  indicator: BoxDecoration(
+                      color: AppThemeColors.highLight,
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(30))),
+                  tabs: const [
+                    Tab(
+                        icon: TextView(
+                      fontSize: 13,
+                      title: "Details",
+                      fontWeight: FontWeight.w600,
+                    )),
+                    Tab(
+                        icon: TextView(
+                      fontSize: 13,
+                      title: "Files",
+                      fontWeight: FontWeight.w600,
+                    )),
+                    Tab(
+                        icon: TextView(
+                      fontSize: 13,
+                      title: "Notes",
+                      fontWeight: FontWeight.w600,
+                    )),
+                  ],
+                ),
               ),
             ),
             const SizedBox(
@@ -84,8 +87,8 @@ class EventDetail extends StatelessWidget {
             Container(
                 height: height * 0.5,
                 padding: const EdgeInsets.only(top: 30, left: 30, right: 30),
-                child: const TabBarView(
-                  children: [DetailsTabBar(), Text("print('');"), Text("sss")],
+                child:  TabBarView(
+                  children: [DetailsTabBar(width : width), Text("print('');"), Text("sss")],
                 ))
           ],
         ),
