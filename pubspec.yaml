@@ -45,6 +45,8 @@ dependencies:
   riverpod:
   hive:
   hive_flutter:
+  hive_generator:
+  build_runner:
 dev_dependencies:
   flutter_test:
     sdk: flutter
