@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_week_view/flutter_week_view.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:taskit/components/textviews/text_view.dart';
 import 'package:taskit/pages/add_event.dart';
 import 'package:taskit/pages/event_detail.dart';
 import '../constants/appconstants.dart';
@@ -14,7 +13,6 @@ class EventDayView extends StatelessWidget {
     DateTime now = DateTime.now();
     DateTime date = DateTime(now.year, now.month, now.day);
 
-
     return SizedBox(
       height: 400,
       child: DayView(
@@ -24,9 +22,12 @@ class EventDayView extends StatelessWidget {
         onBackgroundTappedDown: (DateTime time) {
           debugPrint("$time");
           //showAlertDialog(context);
-          showModalBottomSheet(isScrollControlled: true, context: context, builder: (context) =>  AddEvent(
-            eventTitle: "Add New Event",
-          ));
+          showModalBottomSheet(
+              isScrollControlled: true,
+              context: context,
+              builder: (context) => const AddEvent(
+                    eventTitle: "Add New Event",
+                  ));
         },
         date: date,
         userZoomable: false,
@@ -73,8 +74,15 @@ class EventDayView extends StatelessWidget {
                 showModalBottomSheet(
                     context: context,
                     isScrollControlled: true,
-                    builder: (context) => const EventDetail(
-                          eventTitle: "Event: UI Redesign",
+                    builder: (context) => SingleChildScrollView(
+                          child: Container(
+                            padding: EdgeInsets.only(
+                                bottom:
+                                    MediaQuery.of(context).viewInsets.bottom),
+                            child: const AddEvent(
+                              eventTitle: "Add New Event",
+                            ),
+                          ),
                         ));
               }),
         ],

@@ -7,12 +7,16 @@ class TextFieldView extends StatelessWidget {
   final String hintText;
   final String title;
   IconData? suffixIcon;
-  TextFieldView({super.key, required this.hintText, this.suffixIcon, required this.title});
+  TextFieldView(
+      {super.key,
+      required this.hintText,
+      this.suffixIcon,
+      required this.title});
 
   @override
   Widget build(BuildContext context) {
     DateTime selectedDate = DateTime.now();
-    Future<void> _selectDate(BuildContext context) async {
+    Future<void> selectDate(BuildContext context) async {
       final DateTime? picked = await showDatePicker(
           context: context,
           initialDate: selectedDate,
@@ -38,28 +42,45 @@ class TextFieldView extends StatelessWidget {
         const SizedBox(
           height: 15,
         ),
-      TextField(
-      //controller: _textController,
-      autofocus: true,
-      decoration: InputDecoration(
-        suffixIcon: GestureDetector(
-          child: Icon(suffixIcon),
-          onTap: () => _selectDate(context),
-        ),
-        hintText: hintText,
-        hintStyle: TextStyle(color: AppThemeColors.primaryColor),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(30.0),
-          borderSide: BorderSide(
-              color: AppThemeColors.highLight.withOpacity(0.3), width: 2.0),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(30.0),
-          borderSide: BorderSide(
-              color: AppThemeColors.highLight.withOpacity(0.9), width: 2.0),
-        ),
-      ),
-    )
+        TextFormField(
+          //controller: _textController,
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please enter some text';
+            }
+            return null;
+          },
+          autofocus: true,
+          decoration: InputDecoration(
+            suffixIcon: GestureDetector(
+              child: Icon(suffixIcon),
+              onTap: () => selectDate(context),
+            ),
+            hintText: hintText,
+            alignLabelWithHint: true,
+            hintStyle: TextStyle(color: AppThemeColors.primaryColor),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30.0),
+              borderSide: BorderSide(
+                  color: AppThemeColors.highLight.withOpacity(0.3), width: 2.0),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30.0),
+              borderSide: BorderSide(
+                  color: AppThemeColors.highLight.withOpacity(0.9), width: 2.0),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30.0),
+              borderSide: const BorderSide(
+                  color: Colors.red, width: 2.0),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30.0),
+              borderSide: const BorderSide(
+                  color: Colors.red, width: 2.0),
+            ),
+          ),
+        )
       ],
     );
   }

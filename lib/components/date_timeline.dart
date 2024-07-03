@@ -28,7 +28,7 @@ class _CalendarTimeLineState extends State<CalendarTimeLine> {
             // New date selected
             setState(() {
               // _selectedValue = date;
-              print("$date");
+              debugPrint("$date");
             });
           },
         ),

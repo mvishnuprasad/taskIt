@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:taskit/pages/calendar_view.dart';
 import 'models/eventmodel.dart';
@@ -12,7 +12,7 @@ Future<void> main() async {
       await path_provider.getApplicationDocumentsDirectory();
   Hive.init(appDocumentDirectory.path);
   Hive.registerAdapter(EventModelAdapter());
-  runApp(const HomePage());
+  runApp(const ProviderScope(child: HomePage()));
 }
 
 class HomePage extends StatelessWidget {
