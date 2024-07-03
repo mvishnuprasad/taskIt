@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:taskit/pages/calendar_view.dart';
 
 void main() {

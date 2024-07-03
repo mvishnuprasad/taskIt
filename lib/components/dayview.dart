@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_week_view/flutter_week_view.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:taskit/components/textviews/text_view.dart';
+import 'package:taskit/pages/add_event.dart';
 import 'package:taskit/pages/event_detail.dart';
 import '../constants/appconstants.dart';
 
@@ -11,9 +13,21 @@ class EventDayView extends StatelessWidget {
   Widget build(BuildContext context) {
     DateTime now = DateTime.now();
     DateTime date = DateTime(now.year, now.month, now.day);
+
+
     return SizedBox(
       height: 400,
       child: DayView(
+        onHoursColumnTappedDown: (HourMinute hour) {
+          debugPrint("$hour");
+        },
+        onBackgroundTappedDown: (DateTime time) {
+          debugPrint("$time");
+          //showAlertDialog(context);
+          showModalBottomSheet(isScrollControlled: true, context: context, builder: (context) =>  AddEvent(
+            eventTitle: "Add New Event",
+          ));
+        },
         date: date,
         userZoomable: false,
         hoursColumnStyle: HoursColumnStyle(
@@ -33,9 +47,8 @@ class EventDayView extends StatelessWidget {
             textAlignment: Alignment.centerLeft),
         style: DayViewStyle(
           hourRowHeight: 60,
-          headerSize:20,
+          headerSize: 20,
           currentTimeCircleRadius: 10,
-
           currentTimeCircleColor: AppThemeColors.highLight,
           currentTimeRuleHeight: 2,
           currentTimeRuleColor: AppThemeColors.primaryColor,
@@ -43,27 +56,27 @@ class EventDayView extends StatelessWidget {
         ),
         events: [
           FlutterWeekViewEvent(
-            textStyle: GoogleFonts.poppins(
-                textStyle: TextStyle(
-                    color: AppThemeColors.background,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600)),
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(Radius.circular(30)),
-                color: AppThemeColors.highLight),
-            title: 'An event 1',
-            description: 'Even details are here',
-            start: date.subtract(const Duration(hours: 1)),
-            end: date.add(const Duration(hours: 2, minutes: 10)),
-            onTap:   (){
-              showModalBottomSheet(
-                  context: context,
-                  isScrollControlled: true,
-                  builder: (context) => EventDetail()// The page to display as a bottom sheet
-              );
-            }
-          ),
+              textStyle: GoogleFonts.poppins(
+                  textStyle: TextStyle(
+                      color: AppThemeColors.background,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600)),
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(Radius.circular(30)),
+                  color: AppThemeColors.highLight),
+              title: 'An event 1',
+              description: 'Even details are here',
+              start: date.subtract(const Duration(hours: 1)),
+              end: date.add(const Duration(hours: 2, minutes: 10)),
+              onTap: () {
+                showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    builder: (context) => const EventDetail(
+                          eventTitle: "Event: UI Redesign",
+                        ));
+              }),
         ],
       ),
     );

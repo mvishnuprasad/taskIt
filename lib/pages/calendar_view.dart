@@ -3,21 +3,21 @@ import 'package:calendar_view/calendar_view.dart';
 import 'package:taskit/components/dayview.dart';
 import 'package:taskit/components/date_timeline.dart';
 import 'package:taskit/constants/appconstants.dart';
-
-import '../components/text_view.dart';
-import '../components/date_text.dart';
+import '../components/textviews/date_text.dart';
+import '../components/textviews/text_view.dart';
 
 class TaskCalendar extends StatelessWidget {
   const TaskCalendar({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
+    final height = MediaQuery.sizeOf(context).height;
     return CalendarControllerProvider(
         controller: EventController(),
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           home: Scaffold(
+              resizeToAvoidBottomInset: false,
               backgroundColor: AppThemeColors.background.withOpacity(0.99),
               body: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

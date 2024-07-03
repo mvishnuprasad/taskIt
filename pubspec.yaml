@@ -40,7 +40,11 @@ dependencies:
   date_picker_timeline:
   flutter_week_view:
   intl:
-
+  provider:
+  flutter_riverpod:
+  riverpod:
+  hive:
+  hive_flutter:
 dev_dependencies:
   flutter_test:
     sdk: flutter
