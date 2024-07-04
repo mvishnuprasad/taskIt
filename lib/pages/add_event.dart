@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/components/textviews/text_field.dart';
+import 'package:taskit/models/eventmodel.dart';
 import 'package:taskit/providers/dataproviders.dart';
+import '../components/persistance/hive.dart';
 import '../components/textviews/text_view.dart';
 import '../constants/appconstants.dart';
 
@@ -15,6 +17,11 @@ class AddEvent extends ConsumerWidget {
     final width = MediaQuery.sizeOf(context).width;
     final formKey = GlobalKey<FormState>();
     //final height = MediaQuery.sizeOf(context).height;
+    TextEditingController eventNameController = TextEditingController();
+    TextEditingController dateController = TextEditingController();
+    TextEditingController startTimeController = TextEditingController();
+    TextEditingController endTimeController = TextEditingController();
+    TextEditingController locationController = TextEditingController();
     return Form(
       autovalidateMode: AutovalidateMode.onUserInteraction,
       key: formKey,
@@ -64,6 +71,16 @@ class AddEvent extends ConsumerWidget {
             TextFieldView(
               hintText: "Enter the name of the event.",
               title: 'Event Name',
+              controller: eventNameController,
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            TextFieldView(
+              hintText: "Select Date",
+              suffixIcon: Icons.date_range,
+              title: 'Date',
+              controller: dateController,
             ),
             const SizedBox(
               height: 20,
@@ -74,16 +91,18 @@ class AddEvent extends ConsumerWidget {
                 SizedBox(
                     width: width * 0.5 - 30,
                     child: TextFieldView(
-                      hintText: "Select Date",
+                      hintText: "Start TIme",
                       suffixIcon: Icons.date_range,
-                      title: 'Date',
+                      title: 'Start Time',
+                      controller: startTimeController,
                     )),
                 SizedBox(
                     width: width * 0.5 - 30,
                     child: TextFieldView(
-                      hintText: "Select Time",
+                      hintText: "End Time",
                       suffixIcon: Icons.access_time_outlined,
-                      title: 'Time',
+                      title: 'End Time',
+                      controller: endTimeController,
                     ))
               ],
             ),
@@ -93,6 +112,7 @@ class AddEvent extends ConsumerWidget {
             TextFieldView(
               hintText: "Location / URL",
               title: 'Event Location',
+              controller: locationController,
             ),
             const SizedBox(
               height: 20,
@@ -133,10 +153,22 @@ class AddEvent extends ConsumerWidget {
                   ),
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Processing Data')),
-                      );
+                      eventData.add(EventModel(
+                          title: eventNameController.text,
+                          date: dateController.text,
+                          startTime: startTimeController.text,
+                          location: locationController.text,
+                          endTime: endTimeController.text));
+                      debugPrint("${eventData.toList().length}");
+                      HiveMethods().saveToHive(EventModel(
+                          title: eventNameController.text,
+                          date: dateController.text,
+                          startTime: startTimeController.value.text,
+                          location: locationController.text,
+                          endTime: endTimeController.value.text));
+                      Navigator.pop(context);
                     }
+
                   },
                   child: TextView(
                     title: "Submit",

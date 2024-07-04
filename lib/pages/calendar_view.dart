@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:calendar_view/calendar_view.dart';
-import 'package:taskit/components/dayview.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:taskit/components/event_dayview.dart';
 import 'package:taskit/components/date_timeline.dart';
 import 'package:taskit/constants/appconstants.dart';
+import 'package:taskit/providers/dataproviders.dart';
 import '../components/textviews/date_text.dart';
 import '../components/textviews/text_view.dart';
 
-class TaskCalendar extends StatelessWidget {
+class TaskCalendar extends ConsumerWidget {
   const TaskCalendar({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final eventData = ref.watch(eventProvider);
     final height = MediaQuery.sizeOf(context).height;
     return CalendarControllerProvider(
         controller: EventController(),

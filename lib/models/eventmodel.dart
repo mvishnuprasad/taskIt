@@ -2,9 +2,7 @@ import 'package:hive/hive.dart';
 
 part 'eventmodel.g.dart';
 
-
-
-@HiveType(typeId: 0,adapterName: "EventModelAdapter")
+@HiveType(typeId: 0, adapterName: "EventModelAdapter")
 class EventModel extends HiveObject {
   @HiveField(0)
   String title;
@@ -13,20 +11,22 @@ class EventModel extends HiveObject {
   String date;
 
   @HiveField(2)
-  String time;
+  String startTime;
 
   @HiveField(3)
-  String location;
+  String endTime;
 
   @HiveField(4)
+  String location;
+
+  @HiveField(5)
   List<String>? members;
-
-
 
   EventModel({
     required this.title,
     required this.date,
-    required this.time,
+    required this.startTime,
+    required this.endTime,
     required this.location,
     this.members,
   });

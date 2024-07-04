@@ -19,25 +19,28 @@ class EventModelAdapter extends TypeAdapter<EventModel> {
     return EventModel(
       title: fields[0] as String,
       date: fields[1] as String,
-      time: fields[2] as String,
-      location: fields[3] as String,
-      members: (fields[4] as List?)?.cast<String>(),
+      startTime: fields[2] as String,
+      endTime: fields[3] as String,
+      location: fields[4] as String,
+      members: (fields[5] as List?)?.cast<String>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, EventModel obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.title)
       ..writeByte(1)
       ..write(obj.date)
       ..writeByte(2)
-      ..write(obj.time)
+      ..write(obj.startTime)
       ..writeByte(3)
-      ..write(obj.location)
+      ..write(obj.endTime)
       ..writeByte(4)
+      ..write(obj.location)
+      ..writeByte(5)
       ..write(obj.members);
   }
 
