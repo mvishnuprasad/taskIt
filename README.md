@@ -4,13 +4,11 @@ task scheduler app.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+THis is an event manager app.
+YOu can create events and add some details about that event.
 
-A few resources to get you started if this is your first Flutter project:
+Made tith the help of two packages, flutter_week_view and date_picker_timeline
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- [flutter_week_view](https://pub.dev/packages/flutter_week_view)
+- [date_picker_timeline](https://pub.dev/packages/date_picker_timeline)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.

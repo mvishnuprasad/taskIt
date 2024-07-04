@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/constants/appconstants.dart';
+import 'package:taskit/providers/dataproviders.dart';
 
 
-class CalendarTimeLine extends StatefulWidget {
-  const CalendarTimeLine({super.key});
-
+class CalendarTimeLine extends ConsumerWidget {
   @override
-  State<CalendarTimeLine> createState() => _CalendarTimeLineState();
-}
-
-class _CalendarTimeLineState extends State<CalendarTimeLine> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context,WidgetRef ref) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -26,10 +21,13 @@ class _CalendarTimeLineState extends State<CalendarTimeLine> {
           selectedTextColor: AppThemeColors.background,
           onDateChange: (date) {
             // New date selected
-            setState(() {
+
               // _selectedValue = date;
+            ref.read(dateProvider.notifier).state = date;
+
+
               debugPrint("$date");
-            });
+
           },
         ),
       ],

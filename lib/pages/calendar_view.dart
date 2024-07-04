@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:calendar_view/calendar_view.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/components/event_dayview.dart';
 import 'package:taskit/components/date_timeline.dart';
@@ -15,9 +14,7 @@ class TaskCalendar extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final eventData = ref.watch(eventProvider);
     final height = MediaQuery.sizeOf(context).height;
-    return CalendarControllerProvider(
-        controller: EventController(),
-        child: MaterialApp(
+    return  MaterialApp(
           debugShowCheckedModeBanner: false,
           home: Scaffold(
               resizeToAvoidBottomInset: false,
@@ -78,7 +75,7 @@ class TaskCalendar extends ConsumerWidget {
                           const SizedBox(
                             height: 20,
                           ),
-                          const CalendarTimeLine(),
+                           CalendarTimeLine(),
                         ],
                       ),
                     ),
@@ -108,6 +105,6 @@ class TaskCalendar extends ConsumerWidget {
                       )),
                 ],
               )),
-        ));
+        );
   }
 }

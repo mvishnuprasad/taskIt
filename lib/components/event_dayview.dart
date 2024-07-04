@@ -6,7 +6,6 @@ import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 import 'package:taskit/models/eventmodel.dart';
 import 'package:taskit/pages/add_event.dart';
-import 'package:taskit/providers/dataproviders.dart';
 import '../constants/appconstants.dart';
 
 class EventDayView extends ConsumerWidget {
