@@ -5,7 +5,9 @@ import '../textviews/text_view.dart';
 
 class DetailsTabBar extends StatelessWidget {
   final double width;
-  const DetailsTabBar({super.key, required this.width});
+  final String time;
+  final String location;
+  const DetailsTabBar({super.key, required this.width, required this.time, required this.location});
 
   @override
   Widget build(BuildContext context) {
@@ -14,12 +16,13 @@ class DetailsTabBar extends StatelessWidget {
       children: [
         TabBarItem(
           icon: Icons.calendar_month,
-          text: '10:30 - 11:30',
+          text: time,
           width: width,
         ),
         TabBarItem(
           icon: Icons.my_location_outlined,
-          text: 'zoom.org/xar-eee-ee',
+          text: location
+          ,
           width: width,
         ),
         TabBarItem(

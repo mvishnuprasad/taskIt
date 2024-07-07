@@ -8,7 +8,10 @@ import '../constants/appconstants.dart';
 
 class EventDetail extends StatelessWidget {
   final String eventTitle;
-  const EventDetail({super.key, required this.eventTitle});
+  final String eventTime;
+  final String eventLocation;
+
+  const EventDetail({super.key, required this.eventTitle, required this.eventTime, required this.eventLocation});
 
   @override
   Widget build(BuildContext context) {
@@ -36,11 +39,11 @@ class EventDetail extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              height: 40,
+              height: 15,
             ),
             Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   ConstrainedBox(
                       constraints: BoxConstraints(maxWidth: (width - 40) * 0.7),
@@ -101,7 +104,7 @@ class EventDetail extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 30, left: 30, right: 30),
                 child: TabBarView(
                   children: [
-                    DetailsTabBar(width: width),
+                    DetailsTabBar(width: width, time: eventTime,location: eventLocation,),
                     FilesPage(width: width),
                     NotesPage(width: width),
                   ],

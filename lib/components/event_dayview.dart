@@ -6,6 +6,7 @@ import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 import 'package:taskit/models/eventmodel.dart';
 import 'package:taskit/pages/add_event.dart';
+import 'package:taskit/pages/event_detail.dart';
 import '../constants/appconstants.dart';
 
 class EventDayView extends ConsumerWidget {
@@ -52,14 +53,10 @@ class EventDayView extends ConsumerWidget {
             showModalBottomSheet(
               context: context,
               isScrollControlled: true,
-              builder: (context) => SingleChildScrollView(
-                child: Container(
-                  padding: EdgeInsets.only(
-                      bottom: MediaQuery.of(context).viewInsets.bottom),
-                  child: const AddEvent(
-                    eventTitle: "Add New Event",
-                  ),
-                ),
+              builder: (context) => EventDetail(
+                eventTitle: event.title,
+                eventTime: "${event.startTime} - ${event.endTime}",
+                eventLocation: event.location,
               ),
             );
           },
@@ -75,58 +72,54 @@ class EventDayView extends ConsumerWidget {
         if (snapshot.connectionState == ConnectionState.done) {
           var eventsBox = snapshot.data!;
           var savedEvents = eventsBox.values.toList();
-          return SizedBox(
-            height: 400,
-            child: DayView(
-                onHoursColumnTappedDown: (HourMinute hour) {
-                  debugPrint("$hour");
-                  debugPrint("${savedEvents.length}");
+          return DayView(
+              onHoursColumnTappedDown: (HourMinute hour) {
+                debugPrint("$hour");
+                debugPrint("${savedEvents.length}");
+              },
+              onBackgroundTappedDown: (DateTime time) {
+                debugPrint("${savedEvents.length}");
+                showModalBottomSheet(
+                    isScrollControlled: true,
+                    context: context,
+                    builder: (context) => const AddEvent(
+                          eventTitle: "Add New Event",
+                        ));
+              },
+              date: date,
+              userZoomable: false,
+              hoursColumnStyle: HoursColumnStyle(
+                timeFormatter: (HourMinute hourMinute) {
+                  DateTime now = DateTime.now();
+                  DateTime datetime = DateTime(now.year, now.month, now.day,
+                      hourMinute.hour, hourMinute.minute);
+                  String formattedTime = DateFormat('hh:mm a').format(datetime);
+                  return formattedTime;
                 },
-                onBackgroundTappedDown: (DateTime time) {
-                  debugPrint("${savedEvents.length}");
-                  showModalBottomSheet(
-                      isScrollControlled: true,
-                      context: context,
-                      builder: (context) => const AddEvent(
-                            eventTitle: "Add New Event",
-                          ));
-                },
-                date: date,
-                userZoomable: false,
-                hoursColumnStyle: HoursColumnStyle(
-                  timeFormatter: (HourMinute hourMinute) {
-                    DateTime now = DateTime.now();
-                    DateTime datetime = DateTime(now.year, now.month, now.day,
-                        hourMinute.hour, hourMinute.minute);
-                    String formattedTime =
-                        DateFormat('hh:mm a').format(datetime);
-                    return formattedTime;
-                  },
-                  textAlignment: Alignment.centerLeft,
-                  color: AppThemeColors.background,
-                  textStyle: GoogleFonts.poppins(
-                      textStyle: TextStyle(
-                          color: AppThemeColors.primaryColor,
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold)),
-                ),
-                dayBarStyle: DayBarStyle(
+                textAlignment: Alignment.centerLeft,
+                color: AppThemeColors.background,
+                textStyle: GoogleFonts.poppins(
                     textStyle: TextStyle(
-                      color: AppThemeColors.background,
-                    ),
+                        color: AppThemeColors.primaryColor,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold)),
+              ),
+              dayBarStyle: DayBarStyle(
+                  textStyle: TextStyle(
                     color: AppThemeColors.background,
-                    textAlignment: Alignment.centerLeft),
-                style: DayViewStyle(
-                  hourRowHeight: 60,
-                  headerSize: 20,
-                  currentTimeCircleRadius: 10,
-                  currentTimeCircleColor: AppThemeColors.primaryColor,
-                  currentTimeRuleHeight: 3,
-                  currentTimeRuleColor: AppThemeColors.primaryColor,
-                  backgroundColor: AppThemeColors.background,
-                ),
-                events: buildEventList(savedEvents)),
-          );
+                  ),
+                  color: AppThemeColors.background,
+                  textAlignment: Alignment.centerLeft),
+              style: DayViewStyle(
+                hourRowHeight: 60,
+                headerSize: 20,
+                currentTimeCircleRadius: 10,
+                currentTimeCircleColor: AppThemeColors.primaryColor,
+                currentTimeRuleHeight: 3,
+                currentTimeRuleColor: AppThemeColors.primaryColor,
+                backgroundColor: AppThemeColors.background,
+              ),
+              events: buildEventList(savedEvents));
         } else {
           return const Center(child: CircularProgressIndicator());
         }

@@ -45,6 +45,8 @@ dependencies:
   hive_flutter:
   hive_generator:
   build_runner:
+  flutter_timeline_calendar:
+  table_calendar:
 dev_dependencies:
   flutter_test:
     sdk: flutter
