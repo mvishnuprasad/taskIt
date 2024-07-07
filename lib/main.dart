@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:taskit/pages/calendar_view.dart';
+import 'package:taskit/pages/home.dart';
 import 'models/eventmodel.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 

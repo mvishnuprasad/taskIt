@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:taskit/components/calender_page.dart';
 import 'package:taskit/components/event_dayview.dart';
 import 'package:taskit/components/date_timeline.dart';
-import 'package:taskit/components/event_monthview.dart';
+import 'package:taskit/components/event_weekview.dart';
+import 'package:taskit/components/textviews/title_view.dart';
 import 'package:taskit/constants/appconstants.dart';
 import 'package:taskit/providers/dataproviders.dart';
+import '../components/calendar_view.dart';
 import '../components/textviews/date_text.dart';
 import '../components/textviews/text_view.dart';
 
@@ -16,6 +19,7 @@ class TaskCalendar extends ConsumerWidget {
     final eventData = ref.watch(eventProvider);
     final viewData = ref.watch(calendarView.notifier);
     final height = MediaQuery.sizeOf(context).height;
+    final width = MediaQuery.sizeOf(context).width;
     final topHeight = height * 0.4;
     final bottomHeight = height - topHeight;
 
@@ -29,6 +33,7 @@ class TaskCalendar extends ConsumerWidget {
                 backgroundColor: AppThemeColors.background.withOpacity(0.99),
                 body: SingleChildScrollView(
                   child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
@@ -85,12 +90,11 @@ class TaskCalendar extends ConsumerWidget {
                                         color: AppThemeColors.shadow,
                                         fontWeight: FontWeight.bold,
                                       ),
-                                      TextView(
+                                      TitleView(
                                         title: CalendarTitles
                                             .titles[viewData.state],
-                                        fontSize: 36,
-                                        color: AppThemeColors.primaryColor,
-                                        fontWeight: FontWeight.w600,
+                                        dateTitle: CalendarTitles
+                                            .dateValues[viewData.state],
                                       ),
                                     ],
                                   ),
@@ -143,7 +147,7 @@ class TaskCalendar extends ConsumerWidget {
                               const SizedBox(
                                 height: 20,
                               ),
-                              const EventMonthView(),
+                              CalendarView(height),
                             ],
                           ),
                         ),
@@ -167,12 +171,14 @@ class TaskCalendar extends ConsumerWidget {
                                     color: AppThemeColors.shadow,
                                     fontWeight: FontWeight.w600,
                                   ),
-                                  const TodayDate(),
                                 ],
                               ),
-                              SizedBox(
-                                height: height * 0.5,
-                                child: const EventDayView(),
+
+                              //viewData.state == 2 ?EventDayView(height) : EventWeekView(height,width)
+                              CalPage(
+                                viewSelector: viewData.state,
+                                height: height,
+                                width: width,
                               )
                             ],
                           )),
