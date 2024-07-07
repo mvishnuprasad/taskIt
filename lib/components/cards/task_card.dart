@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_timeline_calendar/timeline/dictionaries/dictionary.dart';
-import 'package:taskit/components/textviews/text_view.dart';
+import 'package:taskit/components/cards/text_view.dart';
 
 import '../../constants/appconstants.dart';
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:taskit/components/textviews/text_view.dart';
+import 'package:taskit/components/cards/text_view.dart';
 import 'package:taskit/constants/appconstants.dart';
 import 'package:taskit/providers/dataproviders.dart';
 

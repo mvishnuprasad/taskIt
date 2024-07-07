@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:taskit/components/textviews/text_field.dart';
+import 'package:taskit/components/cards/text_field.dart';
 import 'package:taskit/models/eventmodel.dart';
 import 'package:taskit/providers/dataproviders.dart';
 import '../components/persistance/hive.dart';
-import '../components/textviews/text_view.dart';
+import '../components/cards/text_view.dart';
 import '../constants/appconstants.dart';
 
 class AddEvent extends ConsumerWidget {

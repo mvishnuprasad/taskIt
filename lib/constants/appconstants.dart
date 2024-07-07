@@ -1,9 +1,5 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
-import '../components/textviews/text_view.dart';
 
 class AppThemeColors {
   static Color primaryColor = const Color(0xff005c78);
@@ -14,6 +10,16 @@ class AppThemeColors {
 }
 
 class CalendarTitles {
+  static int getWeekNumber(DateTime date) {
+    int daysToAdd = DateTime.thursday - date.weekday;
+    DateTime thursdayDate = daysToAdd > 0 ? date.add(Duration(days: daysToAdd)) : date.subtract(Duration(days: daysToAdd.abs()));
+    int dayOfYearThursday = dayOfYear(thursdayDate);
+    return 1 + ((dayOfYearThursday - 1) / 7).floor();
+  }
+  static int dayOfYear(DateTime date) {
+    return date.difference(DateTime(date.year, 1, 1)).inDays;
+  }
+
   static String weekDayCalculator() {
     DateTime startOfWeek =
         DateTime.now().subtract(Duration(days: DateTime.now().weekday - 1));

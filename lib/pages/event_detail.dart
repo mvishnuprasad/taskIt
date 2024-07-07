@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:taskit/components/tabbar/tab_bar_second.dart';
 import 'package:taskit/components/tabbar/tab_bar_first.dart';
 import 'package:taskit/components/tabbar/tab_bar_third.dart';
-import '../components/textviews/date_text.dart';
-import '../components/textviews/text_view.dart';
+import '../components/cards/date_text.dart';
+import '../components/cards/text_view.dart';
 import '../constants/appconstants.dart';
 
 class EventDetail extends StatelessWidget {

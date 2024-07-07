@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:taskit/constants/appconstants.dart';
 
-import '../textviews/text_view.dart';
+import '../cards/text_view.dart';
 
 class DetailsTabBar extends StatelessWidget {
   final double width;

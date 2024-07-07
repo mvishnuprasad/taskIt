@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:taskit/components/calender_page.dart';
-import 'package:taskit/components/event_dayview.dart';
-import 'package:taskit/components/date_timeline.dart';
-import 'package:taskit/components/event_weekview.dart';
-import 'package:taskit/components/textviews/title_view.dart';
+import 'package:taskit/components/calendar/event_view.dart';
+import 'package:taskit/components/cards/title_view.dart';
 import 'package:taskit/constants/appconstants.dart';
 import 'package:taskit/providers/dataproviders.dart';
-import '../components/calendar_view.dart';
-import '../components/textviews/date_text.dart';
-import '../components/textviews/text_view.dart';
+import '../components/calendar/calendar_view.dart';
+import '../components/cards/text_view.dart';
 
 class TaskCalendar extends ConsumerWidget {
   const TaskCalendar({super.key});
@@ -175,11 +171,16 @@ class TaskCalendar extends ConsumerWidget {
                               ),
 
                               //viewData.state == 2 ?EventDayView(height) : EventWeekView(height,width)
-                              CalPage(
-                                viewSelector: viewData.state,
-                                height: height,
-                                width: width,
-                              )
+                             Container(
+                               decoration: const BoxDecoration(
+                                 borderRadius: BorderRadius.all(Radius.circular(20)),
+                               ),
+                               child:  EventsView(
+                                 viewSelector: viewData.state,
+                                 height: height,
+                                 width: width,
+                               ),
+                             )
                             ],
                           )),
                     ],

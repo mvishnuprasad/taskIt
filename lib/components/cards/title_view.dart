@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:taskit/components/textviews/text_view.dart';
+import 'package:taskit/components/cards/text_view.dart';
 
 import '../../constants/appconstants.dart';
+
 class TitleView extends StatelessWidget {
   final String title;
   final String dateTitle;

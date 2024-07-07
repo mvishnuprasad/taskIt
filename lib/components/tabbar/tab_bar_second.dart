@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import '../../constants/appconstants.dart';
-import '../textviews/text_view.dart';
+import '../cards/text_view.dart';
 
 class NotesPage extends StatelessWidget {
   final double width;

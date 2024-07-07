@@ -1,15 +1,13 @@
-//import 'package:calendar_view/home.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:taskit/components/textviews/date_text.dart';
-import 'package:taskit/components/textviews/task_card.dart';
-import 'package:taskit/components/textviews/text_view.dart';
+import 'package:taskit/components/cards/task_card.dart';
 import 'package:taskit/constants/appconstants.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../providers/dataproviders.dart';
+import '../../providers/dataproviders.dart';
 
 class CalendarView extends ConsumerWidget {
   final double height;
