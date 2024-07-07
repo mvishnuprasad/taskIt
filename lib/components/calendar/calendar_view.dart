@@ -87,7 +87,7 @@ class CalendarView extends ConsumerWidget {
                                   topLeft: Radius.circular(20),
                                   topRight: Radius.circular(20))),
                           child: Center(
-                            child: Text("${text}"),
+                            child: Text("$text"),
                           ),
                         );
                       }

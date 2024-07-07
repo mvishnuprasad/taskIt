@@ -6,4 +6,4 @@ var eventProvider = StateProvider<List<EventModel>>((ref) => []);
 var dateProvider = StateProvider<DateTime>((ref) => DateTime.now());
 ValueNotifier<bool> myBool = ValueNotifier<bool>(false);
 
-var calendarView = StateProvider<int>((ref) => 0);
+var calendarView = StateProvider<int>((ref) => 1);
