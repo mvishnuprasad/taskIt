@@ -1,3 +1,4 @@
+import 'package:calendar_view/calendar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskit/components/cards/text_field.dart';
@@ -9,6 +10,7 @@ import '../constants/appconstants.dart';
 
 class AddEvent extends ConsumerWidget {
   final String eventTitle;
+
   const AddEvent({super.key, required this.eventTitle});
 
   @override
@@ -152,6 +154,7 @@ class AddEvent extends ConsumerWidget {
                         AppThemeColors.highLight.withOpacity(0.1)),
                   ),
                   onPressed: () {
+                    //CalendarControllerProvider.of(context).controller.add(newEvent);
                     if (formKey.currentState!.validate()) {
                       eventData.add(EventModel(
                           title: eventNameController.text,
@@ -166,6 +169,7 @@ class AddEvent extends ConsumerWidget {
                           startTime: startTimeController.value.text,
                           location: locationController.text,
                           endTime: endTimeController.value.text));
+                      myBool.value = !myBool.value;
                       Navigator.pop(context);
                     }
 
