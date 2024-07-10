@@ -163,6 +163,7 @@ class AddEvent extends ConsumerWidget {
                           location: locationController.text,
                           endTime: endTimeController.text));
                       debugPrint("${eventData.toList().length}");
+
                       HiveMethods().saveToHive(EventModel(
                           title: eventNameController.text,
                           date: dateController.text,

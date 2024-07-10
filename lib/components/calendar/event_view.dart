@@ -3,13 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
+import 'package:taskit/components/calendar/event_maker.dart';
 import 'package:taskit/components/cards/text_view.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:taskit/providers/dataproviders.dart';
+import 'package:taskit/pages/event_detail.dart';
 import '../../constants/appconstants.dart';
 import '../../main.dart';
 import '../../models/eventmodel.dart';
 import '../../pages/add_event.dart';
+import '../../providers/dataproviders.dart';
 
 class EventsView extends StatelessWidget {
   final int viewSelector;
@@ -23,56 +25,27 @@ class EventsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DateTime now = DateTime.now();
-    DateTime date = DateTime(now.year, now.month, now.day);
-    List<int> getTimeFromString(String timeString) {
-      DateFormat timeFormat = DateFormat('h:mm');
-
-      DateTime dateTime = timeFormat.parse(timeString);
-      int hours = dateTime.hour;
-      int minutes = dateTime.minute;
-      return [hours, minutes];
-    }
-
-    List<CalendarEventData> buildEventList(List<EventModel> event) {
-      List<CalendarEventData> calendarEvents = [];
-      for (var event in event) {
-        calendarEvents.add(CalendarEventData(
-          title: event.title,
-          description: event.location,
-          date: DateTime.parse(event.date),
-          startTime: date.add(Duration(
-              hours: getTimeFromString(event.startTime).first,
-              minutes: getTimeFromString(event.startTime).last)),
-          endTime: date.add(Duration(
-              hours: getTimeFromString(event.endTime).first,
-              minutes: getTimeFromString(event.endTime).first)),
-        ));
-      }
-      return events;
-    }
-
     return FutureBuilder<Box<EventModel>>(
       future: Hive.openBox<EventModel>('eventBox'),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           var eventsBox = snapshot.data!;
           var savedEvents = eventsBox.values.toList();
-          //events = buildEventList(savedEvents);
+          // calendarEvents = buildEventList(savedEvents);
+          EventMaker.eventController
+              .addAll(EventMaker.buildEventList(savedEvents));
           return CalendarControllerProvider(
-              controller: eventController,
+              controller: EventMaker.eventController,
               child: SizedBox(
                 height: height * 0.5,
                 child: () {
                   if (viewSelector == 1) {
                     return DayView(
+                      scrollPhysics: const AlwaysScrollableScrollPhysics(),
                       width: width,
                       backgroundColor: AppThemeColors.background,
-                      controller: eventController,
+                      controller: EventMaker.eventController,
                       onDateTap: (time) {
-                        //print(savedEvents.first.title);
-                        myBool.value = !myBool.value;
-
                         showModalBottomSheet(
                           context: context,
                           isScrollControlled: true,
@@ -82,26 +55,44 @@ class EventsView extends StatelessWidget {
                         );
                       },
                       eventTileBuilder: (date, events, boundary, start, end) {
-                        return ListView.builder(
-                          itemCount: savedEvents.length,
-                          itemBuilder: (context, index) {
-                            final event = savedEvents[index];
-                            return Container(
-                              height: 200,
-                              width: width - 100,
-                              color: AppThemeColors.highLight,
-                              child: Text("${event.title}"),
-
-                            );
-                          },
-                        );
+                        if (EventMaker.buildEventList(savedEvents).isNotEmpty) {
+                          return ListView.builder(
+                            itemCount:
+                                EventMaker.buildEventList(savedEvents).length,
+                            itemBuilder: (context, index) {
+                              final event =
+                                  EventMaker.buildEventList(savedEvents)[index];
+                              return Container(
+                                //  height: 20,
+                                width: width - 200,
+                                color: AppThemeColors.highLight,
+                                child: Text(event.title),
+                              );
+                            },
+                          );
+                        } else {
+                          return Container(
+                            child: Text("No Events to show"),
+                          );
+                        }
                       },
                       fullDayEventBuilder: (events, date) {
-                        return Container(
-                          height: 200,
-                          color: AppThemeColors.highLight,
-                          child: Text(events.first.title),
-                        );
+                        if (savedEvents.isNotEmpty) {
+                          return ListView.builder(
+                            itemCount: savedEvents.length,
+                            itemBuilder: (context, index) {
+                              final event = savedEvents[index];
+                              return Container(
+                                height: 200,
+                                width: width - 100,
+                                color: AppThemeColors.primaryColor,
+                                child: Text(event.title),
+                              );
+                            },
+                          );
+                        } else {
+                          return Container();
+                        }
                       },
                       showVerticalLine: false,
                       showLiveTimeLineInAllDays: true,
@@ -109,13 +100,26 @@ class EventsView extends StatelessWidget {
                       maxDay: DateTime(2050),
                       initialDay: DateTime.now(),
                       heightPerMinute: 1,
-                      onEventTap: (events, date) => print(events),
+                      onEventTap: (events, date) {
+                        for (CalendarEventData event in events) {
+                          showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            builder: (context) => EventDetail(
+                              eventTitle: event.title,
+                              eventTime:
+                                  "${event.startTime} - ${event.endTime}",
+                              eventLocation: "${event.description}",
+                            ),
+                          );
+                        }
+                      },
                       onEventDoubleTap: (events, date) => print(events),
                       onEventLongTap: (events, date) => print(events),
                       onDateLongPress: (date) => print(date),
                       startHour: 0,
-                      endHour: 23,
-                      timeLineOffset: 20,
+                      endHour: 24,
+                      timeLineOffset:10,
                       headerStyle: HeaderStyle(
                           leftIcon: Icon(
                             Icons.chevron_left,
@@ -138,7 +142,7 @@ class EventsView extends StatelessWidget {
                                   fontWeight: FontWeight.bold))),
                       timeLineBuilder: (time) {
                         return TextView(
-                          title: DateFormat('hh:mm a').format(time),
+                          title: DateFormat('HH:mm ').format(time),
                           fontSize: 13,
                           color: AppThemeColors.primaryColor,
                           fontWeight: FontWeight.bold,
