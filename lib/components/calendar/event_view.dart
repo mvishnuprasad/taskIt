@@ -55,23 +55,44 @@ class EventsView extends StatelessWidget {
                         );
                       },
                       eventTileBuilder: (date, events, boundary, start, end) {
-                        if (EventMaker.buildEventList(savedEvents).isNotEmpty) {
+                        if (events.isNotEmpty) {
                           return ListView.builder(
-                            itemCount:
-                                EventMaker.buildEventList(savedEvents).length,
+                            itemCount: events.length,
                             itemBuilder: (context, index) {
-                              final event =
-                                  EventMaker.buildEventList(savedEvents)[index];
-                              return Container(
-                                //  height: 20,
-                                width: width - 200,
-                                color: AppThemeColors.highLight,
-                                child: Text(event.title),
+                              final event = events[index];
+                              int durationInMinutes =
+                                  end.difference(start).inMinutes;
+                              double containerHeight =
+                                  durationInMinutes.toDouble() * 1.0;
+                              return Align(
+                                alignment: Alignment.centerRight,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(20)),
+                                    color: AppThemeColors.highLight,
+                                  ),
+                                  margin: const EdgeInsets.only(left: 10),
+                                  height: containerHeight,
+                                  width: width / 1.5,
+                                  child: Center(
+                                      child: ConstrainedBox(
+                                          constraints: BoxConstraints(
+                                              maxWidth: width / 1.6,
+                                              maxHeight: containerHeight),
+                                          child: TextView(
+                                            title:
+                                                "${event.title} starts from ${event.startTime?.hour} : ${event.startTime?.minute} ",
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
+                                            color: AppThemeColors.background,
+                                          ))),
+                                ),
                               );
                             },
                           );
                         } else {
-                          return Container(
+                          return const Center(
                             child: Text("No Events to show"),
                           );
                         }
@@ -82,11 +103,20 @@ class EventsView extends StatelessWidget {
                             itemCount: savedEvents.length,
                             itemBuilder: (context, index) {
                               final event = savedEvents[index];
-                              return Container(
-                                height: 200,
-                                width: width - 100,
-                                color: AppThemeColors.primaryColor,
-                                child: Text(event.title),
+                              // return Container(
+                              //   height: 200,
+                              //   width: width - 100,
+                              //   color: AppThemeColors.primaryColor,
+                              //   child: Text(event.title),
+                              // );
+                              return RoundedEventTile(
+                                borderRadius: BorderRadius.circular(10.0),
+                                title: event.title,
+                                totalEvents: events.length - 1,
+                                description: event.location,
+                                padding: EdgeInsets.all(10.0),
+                                backgroundColor: AppThemeColors.primaryColor,
+                                margin: EdgeInsets.all(2.0),
                               );
                             },
                           );
@@ -108,7 +138,7 @@ class EventsView extends StatelessWidget {
                             builder: (context) => EventDetail(
                               eventTitle: event.title,
                               eventTime:
-                                  "${event.startTime} - ${event.endTime}",
+                                  "${DateFormat('hh mm a').format(event.startTime!)} - ${DateFormat('hh mm a').format(event.endTime!)}",
                               eventLocation: "${event.description}",
                             ),
                           );
@@ -119,7 +149,7 @@ class EventsView extends StatelessWidget {
                       onDateLongPress: (date) => print(date),
                       startHour: 0,
                       endHour: 24,
-                      timeLineOffset:10,
+                      timeLineOffset: 10,
                       headerStyle: HeaderStyle(
                           leftIcon: Icon(
                             Icons.chevron_left,
@@ -142,7 +172,7 @@ class EventsView extends StatelessWidget {
                                   fontWeight: FontWeight.bold))),
                       timeLineBuilder: (time) {
                         return TextView(
-                          title: DateFormat('HH:mm ').format(time),
+                          title: DateFormat('hh:mm a').format(time),
                           fontSize: 13,
                           color: AppThemeColors.primaryColor,
                           fontWeight: FontWeight.bold,
