@@ -17,7 +17,7 @@ class WeekViewWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  WeekView(
-      controller: EventController(),
+      controller: EventMaker.eventController,
       backgroundColor: AppThemeColors.background,
       emulateVerticalOffsetBy: 10,
 
@@ -28,9 +28,31 @@ class WeekViewWidget extends StatelessWidget {
       initialDay: DateTime.now(),
       heightPerMinute: 1.2,
       eventArranger: const SideEventArranger(),
-      onEventTap: (events, date) => print(events),
+      onEventTap: (events, date) {
+        for (CalendarEventData event in events) {
+          showModalBottomSheet(
+            context: context,
+            isScrollControlled: true,
+            builder: (context) => EventDetail(
+              eventTitle: event.title,
+              eventTime:
+              "${DateFormat('hh mm a').format(event.startTime!)} - ${DateFormat('hh mm a').format(event.endTime!)}",
+              eventLocation: "${event.description}",
+            ),
+          );
+        }
+      },
       onEventDoubleTap: (events, date) => print(events),
       onDateLongPress: (date) => print(date),
+      onDateTap: (DateTime date){
+        showModalBottomSheet(
+          context: context,
+          isScrollControlled: true,
+          builder: (context) => const AddEvent(
+            eventTitle: "Add New Event",
+          ),
+        );
+      },
       startDay: WeekDays.sunday,
       startHour: 5,
       endHour: 20,
@@ -44,6 +66,7 @@ class WeekViewWidget extends StatelessWidget {
           fontSize: 28,
         );
       },
+
 
       weekDayBuilder: (day) {
         return Padding(

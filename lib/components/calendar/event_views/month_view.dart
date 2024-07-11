@@ -22,8 +22,8 @@ class MonthViewWidget extends StatelessWidget {
       showBorder: true,
       borderColor: AppThemeColors.highLight.withOpacity(0.6),
       borderSize: BorderSide.strokeAlignCenter,
-      cellBuilder:
-          (day, List<CalendarEventData<Object?>> value, bool, bool2, bool3) {
+      cellBuilder: (day, List<CalendarEventData<Object?>> events, date, isToday,
+          isInMonth) {
         return Container(
             decoration: BoxDecoration(
               color: AppThemeColors.background,
@@ -40,40 +40,103 @@ class MonthViewWidget extends StatelessWidget {
                   : null,
             ),
             padding: const EdgeInsets.only(top: 10),
-            child: Column(
-              children: [
-                TextView(
-                  title: DateFormat('MM').format(day) ==
-                          DateFormat('MM').format(DateTime.now())
-                      ? DateFormat('dd').format(day)
-                      : "",
-                  color: DateFormat('EEE').format(day) == "Sun"
-                      ? Colors.red
-                      : AppThemeColors.primaryColor,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 14,
-                )
-              ],
-            ));
+            child: events.isNotEmpty
+                ? ListView.builder(
+                    itemCount: events.length,
+                    itemBuilder: (context, index) {
+                      final event = events[index];
+                      int? durationInMinutes =
+                          event.endTime?.difference(event.startTime!).inMinutes;
+                      double containerHeight =
+                          durationInMinutes!.toDouble() * 1.0;
+                      return Align(
+                        alignment: Alignment.center,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(20)),
+                            color: AppThemeColors.highLight,
+                          ),
+                          margin: const EdgeInsets.all(3),
+                          height: containerHeight,
+                          width: width / 1.5,
+                          child: Center(
+                              child: GestureDetector(
+                            child: ConstrainedBox(
+                                constraints: BoxConstraints(
+                                    maxWidth: width / 1.6,
+                                    maxHeight: containerHeight),
+                                child: TextView(
+                                  title: DateFormat('MM').format(day) ==
+                                          DateFormat('MM')
+                                              .format(DateTime.now())
+                                      ? DateFormat('dd').format(day)
+                                      : "",
+                                  color: DateFormat('EEE').format(day) == "Sun"
+                                      ? Colors.red
+                                      : AppThemeColors.background,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                )),
+                            onTap: () {
+                              showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: true,
+                                builder: (context) => EventDetail(
+                                  eventTitle: event.title,
+                                  eventTime:
+                                      "${DateFormat('hh mm a').format(event.startTime!)} - ${DateFormat('hh mm a').format(event.endTime!)}",
+                                  eventLocation: "${event.description}",
+                                ),
+                              );
+                            },
+                          )),
+                        ),
+                      );
+                    },
+                  )
+                : TextView(
+                    title: DateFormat('MM').format(day) ==
+                            DateFormat('MM').format(DateTime.now())
+                        ? DateFormat('dd').format(day)
+                        : "",
+                    color: DateFormat('EEE').format(day) == "Sun"
+                        ? Colors.red
+                        : AppThemeColors.primaryColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                  ));
       },
-      controller: EventController(),
-      // to provide custom UI for month cells.
-      // cellBuilder: (date, events, isToday, isInMonth) {
-      //   // Return your widget to display as month cell.
-      //   return Container();
-      // },
+      controller: EventMaker.eventController,
       minMonth: DateTime(1990),
       maxMonth: DateTime(2050),
       initialMonth: DateTime.now(),
       cellAspectRatio: 0.5,
       onPageChange: (date, pageIndex) => print("$date, $pageIndex"),
       onCellTap: (events, date) {
-        // Implement callback when user taps on a cell.
-        print(events);
+        if (events.isEmpty) {
+          showModalBottomSheet(
+            context: context,
+            isScrollControlled: true,
+            builder: (context) => const AddEvent(
+              eventTitle: "Add New Event",
+            ),
+          );
+        }
       },
-      startDay: WeekDays.sunday, // To change the first day of the week.
-      // This callback will only work if cellBuilder is null.
-      onEventTap: (event, date) => print(event),
+      startDay: WeekDays.sunday,
+      onEventTap: (event, date) {
+        showModalBottomSheet(
+          context: context,
+          isScrollControlled: true,
+          builder: (context) => EventDetail(
+            eventTitle: event.title,
+            eventTime:
+                "${DateFormat('hh mm a').format(event.startTime!)} - ${DateFormat('hh mm a').format(event.endTime!)}",
+            eventLocation: "${event.description}",
+          ),
+        );
+      },
       onEventDoubleTap: (events, date) => print(events),
       onEventLongTap: (event, date) => print(event),
       onDateLongPress: (date) => print(date),
@@ -91,7 +154,6 @@ class MonthViewWidget extends StatelessWidget {
       headerStringBuilder: (time, {DateTime? secondaryDate}) {
         return DateFormat('MMMM yyyy').format(time);
       },
-
       headerBuilder: (time, {DateTime? secondaryDate}) {
         return Container(
           padding: const EdgeInsets.only(bottom: 10),
